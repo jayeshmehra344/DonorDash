@@ -1,48 +1,52 @@
-import React from 'react';
+import React from "react";
+import { Gift, Package, Truck, FileText, HeartHandshake } from "lucide-react";
 
 const Home: React.FC = () => {
   return (
-    <div className="font-sans bg-gray-50 text-gray-800">
-      {/* Hero Section */}
-      <div className="bg-blue-600 text-white py-20">
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">Streamlining Charitable Giving</h1>
-          <p className="mb-8">Make Your Donations Count with DonorDash</p>
-          <p className="mb-8">Connect with verified charities, donate items that are needed, and track your impact. Making charitable giving as seamless as online shopping.</p>
-          <div className="space-x-4">
-            <button className="bg-white text-blue-600 px-6 py-2 rounded hover:bg-gray-100">Donate Now</button>
-            <button className="bg-transparent border border-white text-white px-6 py-2 rounded hover:bg-white hover:text-blue-600">How It Works</button>
-          </div>
+    <section className="bg-gradient-to-b from-purple-50 to-white min-h-screen flex items-center justify-center px-6">
+      <div className="max-w-6xl w-full text-center lg:text-left">
+        {/* Header */}
+        <span className="bg-purple-200 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
+          Streamlining Charitable Giving
+        </span>
+        <h1 className="mt-4 text-4xl md:text-5xl font-bold text-gray-900">
+          Make Your Donations Count with DonorDash
+        </h1>
+        <p className="mt-4 text-gray-600 text-lg">
+          Connect with verified charities, donate items that are needed, and track your impact. Making charitable giving as seamless as online shopping.
+        </p>
+
+        {/* Buttons */}
+        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4">
+          <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg flex items-center gap-2">
+            <Gift size={18} />
+            Donate Now
+          </button>
+          <button className="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-lg flex items-center gap-2">
+            How It Works
+            <span>→</span>
+          </button>
+        </div>
+
+        {/* Features */}
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:w-2/3">
+          <FeatureCard icon={<Package size={28} />} title="List Items" description="Easily upload details about items you want to donate." />
+          <FeatureCard icon={<Truck size={28} />} title="Hassle-Free Pickup" description="Schedule convenient pickups from your doorstep." />
+          <FeatureCard icon={<HeartHandshake size={28} />} title="Smart Matching" description="AI recommends the most suitable charities for your items." />
+          <FeatureCard icon={<FileText size={28} />} title="Delivery Proof" description="Get confirmation when your donations are received." />
         </div>
       </div>
+    </section>
+  );
+};
 
-      {/* Features Section */}
-      <div className="container mx-auto py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* List Items */}
-          <div className="text-center">
-            <h2 className="text-xl font-semibold mb-4">List Items</h2>
-            <p>Easily upload details about items you want to donate.</p>
-          </div>
-
-          {/* Smart Matching */}
-          <div className="text-center">
-            <h2 className="text-xl font-semibold mb-4">Smart Matching</h2>
-            <p>At recommends the most suitable charities for your items.</p>
-          </div>
-
-          {/* Hassle-Free Pickup */}
-          <div className="text-center">
-            <h2 className="text-xl font-semibold mb-4">Hassle-Free Pickup</h2>
-            <p>Schedule convenient pickups from your doorstep.</p>
-          </div>
-
-          {/* Delivery Proof */}
-          <div className="text-center">
-            <h2 className="text-xl font-semibold mb-4">Delivery Proof</h2>
-            <p>Get confirmation when your donations are received.</p>
-          </div>
-        </div>
+const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; description: string }> = ({ icon, title, description }) => {
+  return (
+    <div className="bg-white shadow-lg rounded-2xl p-6 flex gap-4 items-start border border-gray-200">
+      <div className="text-purple-600">{icon}</div>
+      <div>
+        <h3 className="font-semibold text-gray-900">{title}</h3>
+        <p className="text-gray-600 text-sm">{description}</p>
       </div>
     </div>
   );
