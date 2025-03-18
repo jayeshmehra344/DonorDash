@@ -1,5 +1,6 @@
 import React from 'react';
-import img1 from "../images/list.jpg"
+import img1 from '../images/list.jpg'; // Corrected import path
+
 
 const HowItWorks = () => {
   const steps = [
