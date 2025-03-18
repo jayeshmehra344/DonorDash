@@ -1,5 +1,5 @@
 import React from 'react';
-import img1 from 'C:/Users/Sohum Srivastava/Desktop/donordash/DonorDash/src/components/images/list.jpg'; // Corrected import path
+import img1 from '../images/list.jpg'; // Corrected import path
 
 const HowItWorks = () => {
   const steps = [
