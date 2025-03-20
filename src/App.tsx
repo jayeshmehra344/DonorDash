@@ -6,7 +6,7 @@ import HowItWorks from './components/ui/howitworks'; // Import HowItWorks compon
 import Donate from './components/Donate'; // Import Donate component
 import Charities from './components/Charities'; // Import Charities component
 import Login from './components/Login'; // Import Login component
-import GetStarted from './components/GetStarted'; // Import GetStarted component
+import GetStarted from './components/ui/GetStarted'; // Import GetStarted component
 import './App.css';
 
 const App: React.FC = () => {
