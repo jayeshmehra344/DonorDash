@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import React Router
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import HowItWorks from './components/ui/howitworks'; // Import HowItWorks component
-import Donate from './components/Donate'; // Import Donate component
-import Charities from './components/Charities'; // Import Charities component
-import Login from './components/Login'; // Import Login component
-import GetStarted from './components/ui/GetStarted'; // Import GetStarted component
+import HowItWorks from './components/ui/howitworks'; 
+import Donate from './components/Donate'; 
+import Charities from './components/Charities'; 
+import Login from './components/Login'; 
+import GetStarted from './components/ui/GetStarted'; 
 import './App.css';
 
 const App: React.FC = () => {
