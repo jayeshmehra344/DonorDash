@@ -1,7 +1,64 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Gift, Package, Truck, FileText, HeartHandshake } from "lucide-react";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import heroImage from "../components/images/herosection.jpg"; // Import hero image
+
+// Google Maps API Key (replace with your own)
+const googleMapsApiKey = "AIzaSyDnUf6DMuoe4g3vtuI4K5oI-VamzBK8HOA";
+
+// Charity locations in New Delhi (latitude, longitude)
+const charityLocations = [
+  { name: "Goonj", position: { lat: 28.5355, lng: 77.2599 } },
+  { name: "HelpAge India", position: { lat: 28.5799, lng: 77.2476 } },
+  { name: "CRY - Child Rights and You", position: { lat: 28.628, lng: 77.3649 } },
+  { name: "Salaam Baalak Trust", position: { lat: 28.6328, lng: 77.2197 } },
+  { name: "Smile Foundation", position: { lat: 28.4595, lng: 77.0266 } },
+  { name: "Uday Foundation", position: { lat: 28.5691, lng: 77.1869 } },
+  { name: "Pratham", position: { lat: 28.6139, lng: 77.209 } },
+  { name: "Save the Children India", position: { lat: 28.5645, lng: 77.2167 } },
+  { name: "Deepalaya", position: { lat: 28.7041, lng: 77.1025 } },
+  { name: "SOS Children's Villages India", position: { lat: 28.5355, lng: 77.391 } },
+];
+
+// GoogleMapComponent
+const GoogleMapComponent = () => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: googleMapsApiKey,
+    libraries: ["marker"],
+  });
+
+  if (!isLoaded) return <div>Loading Map...</div>;
+
+  return (
+    <GoogleMap
+      zoom={12}
+      center={{ lat: 28.6139, lng: 77.209 }}
+      mapContainerClassName="w-full h-[500px] rounded-lg shadow-lg"
+      onLoad={(map) => {
+        charityLocations.forEach((charity) => {
+          try {
+            if (google.maps.marker?.AdvancedMarkerElement) {
+              new google.maps.marker.AdvancedMarkerElement({
+                map,
+                position: charity.position,
+                title: charity.name,
+              });
+            } else {
+              new google.maps.Marker({
+                map,
+                position: charity.position,
+                title: charity.name,
+              });
+            }
+          } catch (error) {
+            console.error("Failed to load marker:", error);
+          }
+        });
+      }}
+    />
+  );
+};
 
 const Home: React.FC = () => {
   return (
@@ -91,6 +148,16 @@ const Home: React.FC = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Google Maps Section at the Bottom */}
+      <div className="w-full bg-white py-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            Top 10 Charities in New Delhi
+          </h2>
+          <GoogleMapComponent />
+        </div>
+      </div>
     </section>
   );
 };
@@ -115,3 +182,4 @@ const FeatureCard: React.FC<{
 };
 
 export default Home;
+
