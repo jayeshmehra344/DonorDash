@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Gift, Package, Truck, FileText, HeartHandshake } from "lucide-react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import heroImage from "../components/images/herosection.jpg"; // Import hero image
 
 // Google Maps API Key (replace with your own)
 const googleMapsApiKey = "AIzaSyDnUf6DMuoe4g3vtuI4K5oI-VamzBK8HOA";
@@ -61,9 +62,31 @@ const GoogleMapComponent = () => {
 
 const Home: React.FC = () => {
   return (
-    <section className="bg-gradient-to-b from-purple-50 to-white min-h-screen pt-20">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    <section className="min-h-screen flex flex-col">
+      {/* Hero Section */}
+      <div className="relative w-full h-[60vh] overflow-hidden">
+        {/* Background Image with Reduced Blue Effect */}
+        <img
+          src={heroImage}
+          alt="Hero Section"
+          className="w-full h-full object-cover brightness-[0.85] contrast-[1.1] saturate-[1.1]"
+        />
+
+        {/* Gradient Overlay for Seamless Transition */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white"></div>
+
+        {/* DonorDash Text Overlay (Purple Theme) */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-purple-700 drop-shadow-lg">
+            DonorDash
+          </h1>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="bg-gradient-to-b from-purple-50 to-white flex-grow flex items-center justify-center px-6 py-16">
+        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          {/* Left Side: Header & CTA Buttons */}
           <div className="text-left">
             <span className="bg-purple-200 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
               Streamlining Charitable Giving
@@ -72,9 +95,12 @@ const Home: React.FC = () => {
               Make Your Donations Count with DonorDash
             </h1>
             <p className="mt-4 text-gray-600 text-lg">
-              Connect with verified charities, donate items that are needed, and track your impact. Making charitable giving as seamless as online shopping.
+              Connect with verified charities, donate items that are needed, and
+              track your impact. Making charitable giving as seamless as online
+              shopping.
             </p>
 
+            {/* CTA Buttons */}
             <div className="mt-6 flex flex-col sm:flex-row items-start gap-4">
               <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg flex items-center gap-2">
                 <Gift size={18} />
@@ -87,22 +113,48 @@ const Home: React.FC = () => {
             </div>
           </div>
 
+          {/* Right Side: Feature Cards with Animation */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
           >
-            <FeatureCard icon={<Package size={28} />} title="List Items" description="Easily upload details about items you want to donate." />
-            <FeatureCard icon={<Truck size={28} />} title="Hassle-Free Pickup" description="Schedule convenient pickups from your doorstep." />
-            <FeatureCard icon={<HeartHandshake size={28} />} title="Smart Matching" description="AI recommends the most suitable charities for your items." />
-            <FeatureCard icon={<FileText size={28} />} title="Delivery Proof" description="Get confirmation when your donations are received." />
+            {/* First Column (Higher) */}
+            <div className="mt-[-40px]">
+              <FeatureCard
+                icon={<Package size={28} />}
+                title="List Items"
+                description="Easily upload details about items you want to donate."
+              />
+            </div>
+            <FeatureCard
+              icon={<Truck size={28} />}
+              title="Hassle-Free Pickup"
+              description="Schedule convenient pickups from your doorstep."
+            />
+
+            <div className="mt-[-40px]">
+              <FeatureCard
+                icon={<HeartHandshake size={28} />}
+                title="Smart Matching"
+                description="AI recommends the most suitable charities for your items."
+              />
+            </div>
+            <FeatureCard
+              icon={<FileText size={28} />}
+              title="Delivery Proof"
+              description="Get confirmation when your donations are received."
+            />
           </motion.div>
         </div>
       </div>
 
+      {/* Google Maps Section at the Bottom */}
       <div className="w-full bg-white py-12">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Top 10 Charities in New Delhi</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            Top 10 Charities in New Delhi
+          </h2>
           <GoogleMapComponent />
         </div>
       </div>
@@ -110,9 +162,16 @@ const Home: React.FC = () => {
   );
 };
 
-const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; description: string }> = ({ icon, title, description }) => {
+const FeatureCard: React.FC<{
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}> = ({ icon, title, description }) => {
   return (
-    <motion.div className="bg-white shadow-lg rounded-2xl p-6 flex gap-4 items-start border border-gray-200 hover:shadow-xl transition-shadow" whileHover={{ scale: 1.05 }}>
+    <motion.div
+      className="bg-white shadow-lg rounded-2xl p-6 flex gap-4 items-start border border-gray-200 hover:shadow-xl transition-shadow"
+      whileHover={{ scale: 1.05 }}
+    >
       <div className="text-purple-600">{icon}</div>
       <div>
         <h3 className="font-semibold text-gray-900">{title}</h3>
@@ -123,3 +182,4 @@ const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; description:
 };
 
 export default Home;
+
