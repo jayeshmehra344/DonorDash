@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom'; 
+import logo from '../components/images/logoagain.svg';
 
 const Navbar: React.FC = () => {
   return (
@@ -7,8 +8,13 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo on the Left */}
-          <Link to="/" className="text-xl font-bold text-purple-600">
-            DonorDash
+          <Link to="/ " className="flex items-center">
+            {/* Replace the text with your SVG logo */}
+            <img
+              src= {logo}
+              alt="DonorDash Logo"
+              className="h-28 w-auto" // Adjust height and width as needed
+            />
           </Link>
 
           {/* Navigation Links and Buttons on the Right */}
