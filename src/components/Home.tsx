@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Gift, Package, Truck, FileText, HeartHandshake } from "lucide-react";
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import heroImage from "../components/images/herosection.jpg"; // Import hero image
 
 // Google Maps API Key (replace with your own)
@@ -21,13 +21,25 @@ const charityLocations = [
   { name: "SOS Children's Villages India", position: { lat: 28.5355, lng: 77.391 } },
 ];
 
+// Define libraries array outside the component to avoid re-renders
+const libraries: ("marker" | "places" | "geometry" | "drawing" | "visualization")[] = ["marker"];
+
 // GoogleMapComponent
 const GoogleMapComponent = () => {
-  const { isLoaded } = useLoadScript({
+  const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: googleMapsApiKey,
-    libraries: ["marker"],
+    libraries: libraries, // Use the static array
   });
 
+  // Define the red marker icon inside the component after the script is loaded
+  const redMarkerIcon = isLoaded
+    ? {
+        url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png", // Red marker icon URL
+        scaledSize: new window.google.maps.Size(40, 40), // Size of the marker
+      }
+    : null;
+
+  if (loadError) return <div>Error loading maps</div>;
   if (!isLoaded) return <div>Loading Map...</div>;
 
   return (
@@ -35,28 +47,20 @@ const GoogleMapComponent = () => {
       zoom={12}
       center={{ lat: 28.6139, lng: 77.209 }}
       mapContainerClassName="w-full h-[500px] rounded-lg shadow-lg"
-      onLoad={(map) => {
-        charityLocations.forEach((charity) => {
-          try {
-            if (google.maps.marker?.AdvancedMarkerElement) {
-              new google.maps.marker.AdvancedMarkerElement({
-                map,
-                position: charity.position,
-                title: charity.name,
-              });
-            } else {
-              new google.maps.Marker({
-                map,
-                position: charity.position,
-                title: charity.name,
-              });
-            }
-          } catch (error) {
-            console.error("Failed to load marker:", error);
-          }
-        });
+      mapContainerStyle={{ width: "100%", height: "500px" }}
+      options={{
+        mapId: "fda64ba75c2c1423", // Your Map ID
       }}
-    />
+    >
+      {charityLocations.map((charity, index) => (
+        <Marker
+          key={index}
+          position={charity.position}
+          title={charity.name}
+          icon={redMarkerIcon} // Add custom red marker icon
+        />
+      ))}
+    </GoogleMap>
   );
 };
 
@@ -64,12 +68,12 @@ const Home: React.FC = () => {
   return (
     <section className="min-h-screen flex flex-col">
       {/* Hero Section */}
-      <div className="relative w-full h-[60vh] overflow-hidden">
+      <div className="relative w-full h-[60vh] overflow-hidden ">
         {/* Background Image with Reduced Blue Effect */}
         <img
           src={heroImage}
           alt="Hero Section"
-          className="w-full h-full object-cover brightness-[0.85] contrast-[1.1] saturate-[1.1]"
+          className="w-full h-full object-cover blur"
         />
 
         {/* Gradient Overlay for Seamless Transition */}
@@ -77,7 +81,10 @@ const Home: React.FC = () => {
 
         {/* DonorDash Text Overlay (Purple Theme) */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-purple-700 drop-shadow-lg">
+          <h1
+            className="text-5xl md:text-6xl font-bold text-purple-700 drop-shadow-lg mt-16"
+            style={{ fontFamily: "'Hemi Head', sans-serif" }} // Force Hemi Head font
+          >
             DonorDash
           </h1>
         </div>
@@ -182,4 +189,3 @@ const FeatureCard: React.FC<{
 };
 
 export default Home;
-
