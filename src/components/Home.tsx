@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Gift, Package, Truck, FileText, HeartHandshake } from "lucide-react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import heroImage from "../components/images/herosection.jpg"; // Import hero image
+import { useNavigate } from "react-router-dom";
 
 // Google Maps API Key (replace with your own)
 const googleMapsApiKey = "AIzaSyDnUf6DMuoe4g3vtuI4K5oI-VamzBK8HOA";
@@ -65,6 +66,7 @@ const GoogleMapComponent = () => {
 };
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <section className="min-h-screen flex flex-col">
       {/* Hero Section */}
@@ -109,11 +111,16 @@ const Home: React.FC = () => {
 
             {/* CTA Buttons */}
             <div className="mt-6 flex flex-col sm:flex-row items-start gap-4">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg flex items-center gap-2">
-                <Gift size={18} />
+            <button
+        onClick={() => navigate("/donate")}
+        className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg flex items-center gap-2"
+      >
+
+                <Gift size={18} />  
                 Donate Now
               </button>
-              <button className="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-lg flex items-center gap-2">
+              <button onClick={() => navigate("/how-it-works")}
+               className="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-lg flex items-center gap-2">
                 How It Works
                 <span>→</span>
               </button>
