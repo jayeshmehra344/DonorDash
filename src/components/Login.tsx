@@ -25,11 +25,13 @@ const Login: React.FC = () => {
         transition={{ duration: 0.8 }}
         className="relative z-10 flex flex-col items-center"
       >
-        <h1 className="text-5xl font-extrabold text-purple-500 mb-6"
-        style={{ fontFamily: "'Hemi Head', sans-serif" }}>
-          DonorDash
-</h1>
 
+        <h1
+          className="text-5xl md:text-6xl font-bold text-purple-700 drop-shadow-lg mb-16"
+          style={{ fontFamily: "'Hemi Head', sans-serif" }}
+        >
+          DonorDash
+        </h1>
 
 
         {/* Switch Buttons */}
@@ -148,9 +150,7 @@ const InputField: React.FC<InputFieldProps> = ({
   );
 };
 
-/* -----------------------------
- * LOGIN FORM
- * ----------------------------- */
+/* LOGIN FORM */
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -168,7 +168,7 @@ const LoginForm: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -177,7 +177,8 @@ const LoginForm: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/");
+        localStorage.setItem("token", data.token); // Store token if needed
+        navigate("/"); // Redirect to home
       } else {
         setError(data.message || "Login failed.");
       }
@@ -223,9 +224,7 @@ const LoginForm: React.FC = () => {
   );
 };
 
-/* -----------------------------
- * SIGNUP FORM (with Address)
- * ----------------------------- */
+/* SIGNUP FORM */
 const SignUpForm: React.FC = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -245,7 +244,7 @@ const SignUpForm: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/signup", {
+      const response = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password, address }),
@@ -254,7 +253,8 @@ const SignUpForm: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/");
+        localStorage.setItem("token", data.token); // Save token if returned
+        navigate("/"); // Redirect to home
       } else {
         setError(data.message || "Sign up failed.");
       }

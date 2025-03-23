@@ -8,7 +8,6 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 
-// Fix __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -20,17 +19,15 @@ const PORT = process.env.PORT || 5000;
 // ===== Middleware =====
 app.use(
   cors({
-    origin: "http://localhost:8080", // Frontend URL
+    origin: "http://localhost:8080",
     credentials: true,
   })
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Serve static files (Uploaded images)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// ===== MySQL Database Connection =====
+// ===== MySQL Connection =====
 const db = mysql.createConnection({
   host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "root",
@@ -46,7 +43,7 @@ db.connect((err) => {
   }
 });
 
-// ===== Multer Setup for Image Upload =====
+// ===== Multer Setup =====
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadDir = path.join(__dirname, "uploads");
@@ -65,14 +62,29 @@ const upload = multer({ storage: storage });
 
 // ===== Routes =====
 
-// Root route - check server status
 app.get("/", (req, res) => {
   res.send("Donation Server is Running! 🎉");
 });
 
-// ===== GET route for /api/donate =====
-app.get("/api/donate", (req, res) => {
-  res.send("Donation API is live! Use POST to submit donation data.");
+// ===== Signup Route WITHOUT Name =====
+app.post('/api/signup', (req, res) => {
+  const { email, password, username, address } = req.body;
+
+  // Validation: check if required fields are present
+  if (!email || !password || !username || !address) {
+    console.log('❌ Missing fields in signup:', req.body);
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  const sql = 'INSERT INTO users (email, password, username, address) VALUES (?, ?, ?, ?)';
+  db.query(sql, [email, password, username, address], (err, result) => {
+    if (err) {
+      console.log('Error inserting data:', err);
+      return res.status(500).json({ message: 'Database insert error' });
+    }
+    console.log("✅ User inserted successfully:", result);
+    res.status(200).json({ message: 'Signup successful' });
+  });
 });
 
 // ===== Donation POST Route =====
@@ -119,6 +131,26 @@ app.post("/api/donate", upload.array("images", 10), (req, res) => {
       return res.status(200).json({ message: "Donation inserted successfully!" });
     }
   );
+});
+
+// ===== Charities GET Route =====
+app.get('/api/charities', (req, res) => {
+  const sql = 'SELECT * FROM charity';
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('❌ Error fetching charities:', err.message);
+      return res.status(500).json({ message: 'Database query error.' });
+    }
+
+    const formattedResults = results.map((charity) => ({
+      ...charity,
+      urgent_needs: charity.urgent_needs
+        ? charity.urgent_needs.split(',').map(item => item.trim())
+        : []
+    }));
+
+    res.json(formattedResults);
+  });
 });
 
 // ===== Start Server =====
