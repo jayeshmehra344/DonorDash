@@ -37,14 +37,8 @@ const Navbar: React.FC = () => {
 
             {/* Login and Get Started Buttons */}
             <div className="flex items-center space-x-6">
-              <Link to="/login" className="text-gray-700 hover:text-purple-600">
+              <Link to="/login" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
                 Login
-              </Link>
-              <Link
-                to="/get-started"
-                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-              >
-                Get Started
               </Link>
             </div>
           </div>

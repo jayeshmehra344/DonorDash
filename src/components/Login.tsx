@@ -22,7 +22,11 @@ const Login: React.FC = () => {
         transition={{ duration: 0.8 }}
         className="relative z-10 flex flex-col items-center"
       >
-        <h1 className="text-5xl font-extrabold text-white mb-6">DonorDash</h1>
+        <h1 className="text-5xl font-extrabold text-purple-500 mb-6"
+        style={{ fontFamily: "'Hemi Head', sans-serif" }}>
+          DonorDash
+</h1>
+
 
         <div className="flex mb-6 rounded-xl overflow-hidden w-64 shadow-lg">
           <button
