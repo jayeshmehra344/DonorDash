@@ -50,7 +50,8 @@ const Donate: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100 text-black p-8 pt-20">
-      <h1 className="text-3xl font-bold mb-2">Donate Items</h1>
+      <h1 className="text-3xl font-bold mb-8"
+      style={{ fontFamily: "'Hemi Head', sans-serif" }} >Donate Items</h1>
       <p className="text-gray-600 mb-6">
         List your items for donation and we'll match you with charities that need them most.
       </p>
