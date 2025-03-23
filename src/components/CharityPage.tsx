@@ -2,8 +2,8 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { Link } from "react-router-dom";
+import CharitiesLogo from "./images/Charitieslogo.jpg";
 
-// Mock data for charities
 const charities = [
   {
     id: 1,
@@ -42,8 +42,13 @@ const charities = [
 export default function CharitiesShowcase() {
   return (
     <section className="py-16 md:py-24">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+      {/* ✅ This div ONLY contains the heading section with the background */}
+      <div
+        className="relative py-16 px-4 md:px-6 bg-cover bg-center text-white"
+        style={{ backgroundImage: `url(${CharitiesLogo})` }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div> {/* Optional dark overlay */}
+        <div className="relative flex flex-col items-center justify-center text-center space-y-4">
           <div className="space-y-2">
             <div className="inline-block rounded-lg bg-donor-purple/10 px-3 py-1 text-sm text-donor-purple">
               Verified Partners
@@ -56,8 +61,11 @@ export default function CharitiesShowcase() {
             </p>
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+      </div>
+
+      {/* ✅ The cards remain outside, with NO background */}
+      <div className="container px-4 md:px-6 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {charities.map((charity) => (
             <Card key={charity.id} className="overflow-hidden">
               <div className="aspect-video w-full overflow-hidden">
@@ -94,7 +102,7 @@ export default function CharitiesShowcase() {
             </Card>
           ))}
         </div>
-        
+
         <div className="mt-10 flex justify-center">
           <Button variant="outline" asChild>
             <Link to="/charities">View All Charities</Link>
