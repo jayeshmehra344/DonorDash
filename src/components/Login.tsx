@@ -27,7 +27,7 @@ const Login: React.FC = () => {
       >
 
         <h1
-          className="text-5xl md:text-6xl font-bold text-purple-700 drop-shadow-lg mb-16"
+          className="text-5xl md:text-6xl font-bold text-purple-700 drop-shadow-lg mb-12 mt-10"
           style={{ fontFamily: "'Hemi Head', sans-serif" }}
         >
           DonorDash
