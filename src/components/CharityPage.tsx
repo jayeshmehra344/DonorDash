@@ -1,8 +1,8 @@
-import { Button } from "../components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
+import { Button } from "../components/ui/Button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../components/ui/Card";
+import { Badge } from "../components/ui/Badge";
 import { Link } from "react-router-dom";
-import CharitiesLogo from "./images/Charitieslogo.jpg";
+import CharitiesLogo from "./images/Charitieslogo.jpg"; // Import the background image
 
 const charities = [
   {
@@ -41,24 +41,26 @@ const charities = [
 
 export default function CharitiesShowcase() {
   return (
-    <section className="py-16 md:py-24">
-      {/* ✅ This div ONLY contains the heading section with the background */}
-      <div
-        className="relative py-16 px-4 md:px-6 bg-cover bg-center text-white"
-        style={{ backgroundImage: `url(${CharitiesLogo})` }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div> {/* Optional dark overlay */}
-        <div className="relative flex flex-col items-center justify-center text-center space-y-4">
-          <div className="space-y-2">
-            <div className="inline-block rounded-lg bg-donor-purple/10 px-3 py-1 text-sm text-donor-purple">
-              Verified Partners
-            </div>
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+    <section className="pt-12 md:pt-16"> {/* Reduced top padding to move the page up */}
+      {/* ✅ Hero Section with Background Image */}
+      <div className="relative w-full h-[40vh] overflow-hidden"> {/* Adjusted height to match homepage */}
+        {/* Background Image with Blur */}
+        <img
+          src={CharitiesLogo} // Use the imported image
+          alt="Charities Background"
+          className="w-full h-full object-cover"
+          style={{ filter: "blur(4px)" }} // Apply blur effect using inline CSS
+        />
+
+        {/* Content Overlay */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-4">
+          <div className="space-y-2"> 
+            <h2
+              className="text-4xl font-extrabold tracking-tighter md:text-6xl text-purple-700 drop-shadow-lg mb-6"
+              style={{ fontFamily: "'Hemi Head', sans-serif" }}
+            >
               Featured Charities
             </h2>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
-              Browse through our network of verified charities and find causes that align with your values.
-            </p>
           </div>
         </div>
       </div>
@@ -67,27 +69,30 @@ export default function CharitiesShowcase() {
       <div className="container px-4 md:px-6 mt-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {charities.map((charity) => (
-            <Card key={charity.id} className="overflow-hidden">
+            <Card key={charity.id} className="overflow-hidden bg-white shadow-lg hover:shadow-xl transition-shadow">
               <div className="aspect-video w-full overflow-hidden">
                 <img 
                   src={charity.image} 
                   alt={charity.name}
                   className="object-cover w-full h-full transition-transform hover:scale-105"
+                  data-darkreader-inline="background"
                 />
               </div>
               <CardHeader>
                 <div className="flex justify-between items-start">
-                  <CardTitle className="text-xl">{charity.name}</CardTitle>
+                  <CardTitle className="text-xl text-gray-900">{charity.name}</CardTitle> {/* Black text */}
                 </div>
-                <Badge variant="secondary" className="mt-1 w-fit">{charity.category}</Badge>
+                <Badge variant="secondary" className="mt-1 w-fit bg-gray-100 text-gray-900">
+                  {charity.category}
+                </Badge>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground text-sm">{charity.description}</p>
+                <p className="text-gray-600 text-sm">{charity.description}</p> {/* Gray text */}
                 <div className="mt-4">
-                  <h4 className="text-sm font-medium mb-2">Urgent Needs:</h4>
+                  <h4 className="text-sm font-medium mb-2 text-gray-900">Urgent Needs:</h4> {/* Black text */}
                   <div className="flex flex-wrap gap-1">
                     {charity.needsUrgent.map((need, index) => (
-                      <Badge key={index} variant="outline" className="bg-donor-purple/5">
+                      <Badge key={index} variant="outline" className="bg-purple-600 text-white border-purple-700">
                         {need}
                       </Badge>
                     ))}
@@ -95,7 +100,7 @@ export default function CharitiesShowcase() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" size="sm" className="w-full" asChild>
+                <Button variant="outline" size="sm" className="w-full bg-white text-purple-600 hover:bg-purple-50 border-purple-600" asChild>
                   <Link to={`/charities/${charity.id}`}>View Details</Link>
                 </Button>
               </CardFooter>
@@ -104,11 +109,11 @@ export default function CharitiesShowcase() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Button variant="outline" asChild>
+          <Button variant="outline" className="bg-purple-600 text-white hover:bg-purple-700" asChild>
             <Link to="/charities">View All Charities</Link>
           </Button>
         </div>
       </div>
     </section>
   );
-}
+} 
