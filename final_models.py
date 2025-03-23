@@ -16,10 +16,10 @@ with open("random_forest_model.pkl", "rb") as f:
 
 # Connect to MySQL Database using pymysql
 conn = pymysql.connect(
-    host='host',
+    host='localhost',
     user='root',
-    password='pass',
-    database='db'
+    password='24June1987',
+    database='bits'
 )
 cursor = conn.cursor()
 
@@ -29,7 +29,7 @@ def fetch_user_data():
     cursor.execute(query)
     user_data = cursor.fetchall()
     return pd.DataFrame(user_data, columns=['user_id', 'latitude', 'longitude'])
-
+    
 # Process user data
 def process_users(user_df):
     user_features = scaler.transform(user_df[['latitude', 'longitude']])
