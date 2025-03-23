@@ -56,8 +56,7 @@ const Donate: React.FC = () => {
     formData.append("pickup_address", data.pickupAddress);
     formData.append("pickup_date", data.pickupDate);
     formData.append("pickup_time", data.pickupTime);
-    images.forEach((image) => formData.append("images[]", image)); 
-
+    images.forEach((image) => formData.append("images[]", image));
 
     try {
       const response = await axios.post("/api/donations", formData, {
@@ -82,18 +81,17 @@ const Donate: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 text-black p-8 pt-20">
-
-      <h1 className="text-3xl font-bold mb-8"
-      style={{ fontFamily: "'Hemi Head', sans-serif" }} >Donate Items</h1>
+    <div className="min-h-screen flex flex-col items-center bg-gray-100 text-black p-8 pt-20 border-8 border-purple-700 rounded-xl">
+      <h1 className="text-4xl font-bold mb-8 text-purple-700" style={{ fontFamily: "'Hemi Head', sans-serif" }}>
+        Donate Items
+      </h1>
       <p className="text-gray-600 mb-6">
-
         List your items for donation and we'll match you with charities that need them most.
       </p>
 
       {/* Step Indicator */}
       <div className="flex w-full max-w-2xl justify-between mb-6">
-        {["Item Details", "Images", "Pickup Details"].map((label, index) => (
+        {[". Item Details", ". Images", ". Pickup Details"].map((label, index) => (
           <div
             key={index}
             className={`flex-1 mx-1 py-2 rounded-md text-center font-semibold flex items-center justify-center gap-2
