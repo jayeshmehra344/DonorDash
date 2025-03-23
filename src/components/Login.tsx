@@ -161,7 +161,7 @@ const LoginForm: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/home");
+        navigate("/");
       } else {
         setError(data.message || "Login failed.");
       }
@@ -225,7 +225,7 @@ const SignUpForm: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/home");
+        navigate("/");
       } else {
         setError(data.message || "Sign up failed.");
       }
